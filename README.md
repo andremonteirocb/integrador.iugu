@@ -116,6 +116,18 @@
   }
 ```
 
+### Enviar fatura por e-mail
+```c#
+  public async Task Enviar_Por_Email()
+  {
+      InvoiceModel resendInvoiceModel = null;
+      using (var apiInvoice = new Invoice())
+      {
+          resendInvoiceModel = await apiInvoice.ResendInvoiceMail("resendInvoiceId").ConfigureAwait(false);
+      };
+  }
+```
+
 ## Cliente
 ### Criar cliente
 ```c#
@@ -167,6 +179,19 @@
       using (var apiClient = new Customer())
       {
           myClients = await apiClient.GetAsync().ConfigureAwait(false);
+      };
+  }
+```
+
+### Obter faturas do cliente
+```c#
+  public async Task Listar_Todas_Faturas_Cliente()
+  {
+      PaggedResponseMessage<InvoiceModel> invoices;
+      using (var apiInvoice = new Invoice())
+      {
+          var filter = new QueryStringFilter() { MaxResults = 10, AditionalParameters = $"customer_id={customer_id}" };
+          invoices = await apiInvoice.GetAllAsync(null, filter).ConfigureAwait(false);
       };
   }
 ```
