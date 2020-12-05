@@ -12,6 +12,7 @@
   
 ## Fatura
 ### Criar Fatura
+```c#
   public async Task CriarFatura()
   {
       var addressModel = new AddressModel
@@ -64,7 +65,7 @@
   }
 ```
 
-### Obter Fatura
+### Obter Fatura por id
 ```c#
   public async Task Consultar_Fatura()
   {
@@ -155,5 +156,29 @@
             var errors = await ErrorResponseMessage.BuildAsync(ex.Message).ConfigureAwait(false);
         }
     };
+  }
+```
+
+### Obter todos os clientes
+```c#
+  public async Task List_Todos_Clientes()
+  {
+      CustomersModel myClients;
+      using (var apiClient = new Customer())
+      {
+          myClients = await apiClient.GetAsync().ConfigureAwait(false);
+      };
+  }
+```
+
+### Deletar cliente
+```c#
+  public async Task DeleteCliente()
+  {
+      CustomerModel myClient;
+      using (var apiClient = new Customer())
+      {
+          myClient = await apiClient.DeleteAsync("cliente_id").ConfigureAwait(false);
+      };
   }
 ```
